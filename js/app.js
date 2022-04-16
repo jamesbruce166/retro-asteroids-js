@@ -14,11 +14,7 @@ class Game {
 		this.startGame();
 	}
 
-	startGame() {
-		console.log(this.ship.test);
-		console.log(this.asteroid.test);
-		console.log(this.controls.test);
-	}
+	startGame() {}
 }
 
 new Game();
