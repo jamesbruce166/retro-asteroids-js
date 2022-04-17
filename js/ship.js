@@ -23,6 +23,14 @@ export default class Ship {
 	render() {
 		this.drawShip();
 		this.drawBullets();
+		this.handleBounds();
+
+		if (this.controls.showCollision) {
+			this.ctx.strokeStyle = 'green';
+			this.ctx.beginPath();
+			this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+			this.ctx.stroke();
+		}
 	}
 
 	drawShip() {
@@ -51,13 +59,6 @@ export default class Ship {
 		);
 		this.ctx.closePath();
 		this.ctx.stroke();
-
-		if (this.controls.showCollision) {
-			this.ctx.strokeStyle = 'green';
-			this.ctx.beginPath();
-			this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-			this.ctx.stroke();
-		}
 	}
 
 	drawBullets() {
@@ -113,5 +114,18 @@ export default class Ship {
 	moveForward() {
 		this.x += 5 * cos(this.rads());
 		this.y -= 5 * sin(this.rads());
+	}
+
+	handleBounds() {
+		if (this.x < 0 - this.radius) {
+			this.x = 800 + this.radius;
+		} else if (this.x > 800 + this.radius) {
+			this.x = 0 - this.radius;
+		}
+		if (this.y < 0 - this.radius) {
+			this.y = 800 + this.radius;
+		} else if (this.y > 800 + this.radius) {
+			this.y = 0 - this.radius;
+		}
 	}
 }
