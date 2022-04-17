@@ -1,42 +1,61 @@
-const centerX = 400;
-const centerY = 400;
-export default class Ship {
+import UserControls from './userControls.js';
+
+const { cos, sin, PI } = Math;
+
+export default class Ship extends UserControls {
 	constructor(ctx) {
+		super();
+
 		this.ctx = ctx;
 
-		this.x = centerX;
-		this.y = centerY;
-
-		this.width = 35;
-		this.height = 50;
+		this.x = 400;
+		this.y = 400;
+		this.angle = 90;
+		this.width = 30;
 	}
 
-	// Here we want to rotate the ship without rotating the entire canvas
-	draw(x, y, angle) {
-		// Reverse x and y layout to bottom left origin
-		x *= -1;
-		y *= -1;
+	move() {
+		this.rotatingLeft && this.rotateLeft();
+		this.rotatingRight && this.rotateRight();
 
-		const radians = (angle * Math.PI) / 180;
+		if (this.forward) {
+			this.x += 5 * cos(this.rads());
+			this.y -= 5 * sin(this.rads());
+		}
+	}
+
+	draw() {
 		const radius = this.width / 2;
 		this.ctx.strokeStyle = '#fff';
 
-		// First translate origin to center of the screen
-		this.ctx.translate(centerX, centerY);
-
-		// Rotate on the new origin at a given angle
-		this.ctx.rotate(radians);
-
-		// Now we can draw the ship
 		this.ctx.beginPath();
-		this.ctx.moveTo(x, y - this.height / 2);
-		this.ctx.lineTo(x + -radius, y + this.height / 2);
-		this.ctx.lineTo(x + radius, y + this.height / 2);
+		this.ctx.moveTo(
+			this.x + ((radius * 4) / 3) * cos(this.rads()),
+			this.y - ((radius * 4) / 3) * sin(this.rads())
+		);
+		this.ctx.lineTo(
+			this.x - radius * ((2 / 3) * cos(this.rads()) + sin(this.rads())),
+			this.y + radius * ((2 / 3) * sin(this.rads()) - cos(this.rads()))
+		);
+		this.ctx.lineTo(
+			this.x - radius * ((2 / 3) * cos(this.rads()) - sin(this.rads())),
+			this.y + radius * ((2 / 3) * sin(this.rads()) + cos(this.rads()))
+		);
 		this.ctx.closePath();
 		this.ctx.stroke();
+	}
 
-		// Then, bring the canvas back to its original point
-		this.ctx.rotate(-radians);
-		this.ctx.translate(-centerX, -centerY);
+	rads() {
+		return this.angle * (PI / 180);
+	}
+
+	rotateLeft() {
+		if (this.angle > 359) this.angle = 0;
+		this.angle += 3;
+	}
+
+	rotateRight() {
+		if (this.angle < 1) this.angle = 360;
+		this.angle -= 3;
 	}
 }
