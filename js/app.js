@@ -15,21 +15,15 @@ class Game {
 
 	startGame() {
 		const nextFrame = () => this.update();
-		//setInterval(nextFrame, 1000 / FPS);
-		nextFrame();
+		setInterval(nextFrame, 1000 / FPS);
+		//nextFrame();
 	}
 
 	update() {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-		this.ship.move();
-		this.ship.draw();
-
-		console.log({
-			x: this.ship.x,
-			y: this.ship.y,
-			a: this.ship.angle,
-		});
+		this.ship.registerEvents();
+		this.ship.render();
 	}
 }
 

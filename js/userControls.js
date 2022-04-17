@@ -3,12 +3,14 @@ export default class UserControls {
 		this.rotatingLeft = false;
 		this.rotatingRight = false;
 		this.forward = false;
+		this.shoot = false;
 
 		document.onkeydown = (event) => {
 			const callback = {
 				ArrowLeft: () => (this.rotatingLeft = true),
 				ArrowRight: () => (this.rotatingRight = true),
 				ArrowUp: () => (this.forward = true),
+				' ': () => (this.shoot = true),
 			}[event.key];
 
 			callback?.();
