@@ -5,12 +5,15 @@ export default class UserControls {
 		this.forward = false;
 		this.shoot = false;
 
+		this.showCollision = false;
+
 		document.onkeydown = (event) => {
 			const callback = {
 				ArrowLeft: () => (this.rotatingLeft = true),
 				ArrowRight: () => (this.rotatingRight = true),
 				ArrowUp: () => (this.forward = true),
 				' ': () => (this.shoot = true),
+				c: () => (this.showCollision = !this.showCollision),
 			}[event.key];
 
 			callback?.();

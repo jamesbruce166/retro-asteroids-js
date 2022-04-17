@@ -1,11 +1,8 @@
-import UserControls from './userControls.js';
-
 const { cos, sin, PI } = Math;
 
-export default class Ship extends UserControls {
-	constructor(ctx) {
-		super();
-
+export default class Ship {
+	constructor(ctx, controls) {
+		this.controls = controls;
 		this.ctx = ctx;
 
 		this.x = 400;
@@ -17,10 +14,10 @@ export default class Ship extends UserControls {
 	}
 
 	registerEvents() {
-		this.rotatingLeft && this.rotateLeft();
-		this.rotatingRight && this.rotateRight();
-		this.forward && this.moveForward();
-		this.shoot && this.fireBullet();
+		this.controls.rotatingLeft && this.rotateLeft();
+		this.controls.rotatingRight && this.rotateRight();
+		this.controls.forward && this.moveForward();
+		this.controls.shoot && this.fireBullet();
 	}
 
 	render() {
@@ -43,6 +40,10 @@ export default class Ship extends UserControls {
 				this.radius * ((2 / 3) * sin(this.rads()) - cos(this.rads()))
 		);
 		this.ctx.lineTo(
+			this.x - this.radius * cos(this.rads()),
+			this.y + this.radius * sin(this.rads())
+		);
+		this.ctx.lineTo(
 			this.x -
 				this.radius * ((2 / 3) * cos(this.rads()) - sin(this.rads())),
 			this.y +
@@ -50,6 +51,13 @@ export default class Ship extends UserControls {
 		);
 		this.ctx.closePath();
 		this.ctx.stroke();
+
+		if (this.controls.showCollision) {
+			this.ctx.strokeStyle = 'green';
+			this.ctx.beginPath();
+			this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+			this.ctx.stroke();
+		}
 	}
 
 	drawBullets() {
@@ -85,7 +93,7 @@ export default class Ship extends UserControls {
 			yv: 8 * sin(this.rads()),
 		});
 
-		this.shoot = false;
+		this.controls.shoot = false;
 	}
 
 	rads() {
