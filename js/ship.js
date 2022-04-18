@@ -98,6 +98,11 @@ export default class Ship {
 		this.controls.shoot = false;
 	}
 
+	respawn() {
+		this.x = 400;
+		this.y = 400;
+	}
+
 	rads() {
 		return this.angle * (PI / 180);
 	}

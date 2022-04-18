@@ -95,3 +95,15 @@ body {
 canvas {
 	border: solid 1px white;
 }
+
+.controls-box {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	margin-right: 20px;
+}
+
+.controls-box p {
+	color: white;
+	padding-bottom: 10px;
+}

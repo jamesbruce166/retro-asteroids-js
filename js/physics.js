@@ -1,15 +1,17 @@
 export default class Physics {
 	constructor() {}
 
-	checkCollision(ship, asteroid) {
+	checkCollision(ship, asteroid, lives, score) {
 		const { asteroids } = asteroid;
-		this.shipHasHitAsteroid(ship, asteroids);
+		lives = this.shipHasHitAsteroid(ship, asteroids, lives);
 
 		const { bullets } = ship;
-		this.bulletHasHitAsteroid(bullets, asteroids);
+		score = this.bulletHasHitAsteroid(bullets, asteroids, score);
+
+		return { score, lives };
 	}
 
-	bulletHasHitAsteroid(bullets, asteroids) {
+	bulletHasHitAsteroid(bullets, asteroids, score) {
 		for (let i = 0; i < bullets.length; i++) {
 			const bullet = bullets[i];
 			const { x: bulletX, y: bulletY, r: bulletR } = bullet;
@@ -30,13 +32,16 @@ export default class Physics {
 				) {
 					asteroid.registerHit();
 					bullets.splice(i, 1);
+					score += 15;
 					continue;
 				}
 			}
 		}
+
+		return score;
 	}
 
-	shipHasHitAsteroid(ship, asteroids) {
+	shipHasHitAsteroid(ship, asteroids, lives) {
 		const { x: shipX, y: shipY, radius: shipR } = ship;
 
 		for (let j = 0; j < asteroids.length; j++) {
@@ -53,9 +58,13 @@ export default class Physics {
 					r2: asteroidR,
 				})
 			) {
-				console.log('ship + asteroid');
+				lives--;
+				ship.respawn();
+				continue;
 			}
 		}
+
+		return lives;
 	}
 
 	collision({ x1, y1, r1, x2, y2, r2 }) {
