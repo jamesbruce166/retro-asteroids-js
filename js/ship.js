@@ -1,3 +1,5 @@
+import Explosion from './explosion.js';
+
 const { cos, sin, PI } = Math;
 
 export default class Ship {
@@ -96,6 +98,11 @@ export default class Ship {
 		});
 
 		this.controls.shoot = false;
+	}
+
+	explode() {
+		const explosion = new Explosion(this.ctx, this.x, this.y);
+		explosion.draw();
 	}
 
 	respawn() {

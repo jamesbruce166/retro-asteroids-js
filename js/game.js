@@ -22,7 +22,7 @@ export default class Game {
 	}
 
 	start() {
-		this.asteroids.populateAsteroids();
+		this.asteroids.populate();
 
 		const nextFrame = () => this.update();
 		setInterval(nextFrame, 1000 / FPS);
@@ -78,14 +78,6 @@ export default class Game {
 	}
 
 	resetGame() {}
-
-	loseLife() {
-		this.lives--;
-	}
-
-	increaseScore() {
-		this.score += 25;
-	}
 
 	drawHearts() {
 		// http://www.java2s.com/Tutorials/Javascript/Canvas_How_to/Shape/Draw_Heart_shape.htm

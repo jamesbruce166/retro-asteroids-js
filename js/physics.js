@@ -44,6 +44,7 @@ export default class Physics {
 	shipHasHitAsteroid(ship, asteroids, lives) {
 		const { x: shipX, y: shipY, radius: shipR } = ship;
 
+		let shouldRespawn = false;
 		for (let j = 0; j < asteroids.length; j++) {
 			const asteroid = asteroids[j];
 			const { x: asteroidX, y: asteroidY, r: asteroidR } = asteroid;
@@ -59,9 +60,40 @@ export default class Physics {
 				})
 			) {
 				lives--;
-				ship.respawn();
-				continue;
+				shouldRespawn = true;
+				ship.explode();
+				break;
 			}
+		}
+
+		if (shouldRespawn) {
+			let safe = false;
+			do {
+				for (let i = 0; i < asteroids.length; i++) {
+					const asteroid = asteroids[i];
+					const {
+						x: asteroidX,
+						y: asteroidY,
+						r: asteroidR,
+					} = asteroid;
+					if (
+						this.collision({
+							x1: 400,
+							y1: 400,
+							r1: shipR,
+							x2: asteroidX,
+							y2: asteroidY,
+							r2: asteroidR,
+						})
+					) {
+						return;
+					}
+
+					safe = true;
+				}
+			} while (!safe);
+			ship.respawn();
+			shouldRespawn = false;
 		}
 
 		return lives;

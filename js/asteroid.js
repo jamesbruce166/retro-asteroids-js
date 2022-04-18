@@ -6,7 +6,7 @@ export default class Asteroid {
 		this.asteroids = [];
 	}
 
-	populateAsteroids() {
+	populate() {
 		for (let i = 0; i < 6; i++) {
 			this.asteroids.push(
 				this.generateAsteriod({
@@ -66,7 +66,6 @@ export default class Asteroid {
 			xNoise: [],
 			yNoise: [],
 			registerHit: function () {
-				console.log(this.points);
 				hitCaller(this);
 			},
 		};
