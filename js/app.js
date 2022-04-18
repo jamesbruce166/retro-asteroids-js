@@ -1,5 +1,6 @@
 import UserControls from './userControls.js';
 import Asteroid from './asteroid.js';
+import Physics from './physics.js';
 import Ship from './ship.js';
 
 const canvas = document.getElementById('canvas');
@@ -10,6 +11,7 @@ class Game {
 	constructor() {
 		const controls = new UserControls();
 
+		this.physics = new Physics();
 		this.ship = new Ship(ctx, controls);
 		this.asteroids = new Asteroid(ctx, controls);
 
@@ -27,9 +29,11 @@ class Game {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 		this.ship.registerEvents();
-		this.ship.render();
 
+		this.ship.render();
 		this.asteroids.render();
+
+		this.physics.checkCollision(this.ship, this.asteroids);
 	}
 }
 

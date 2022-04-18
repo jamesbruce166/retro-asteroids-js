@@ -68,10 +68,10 @@ export default class Ship {
 			this.bullets[idx].y -= this.bullets[idx].yv;
 
 			// render
-			const { x, y } = this.bullets[idx];
+			const { x, y, r } = this.bullets[idx];
 			this.ctx.fillStyle = 'rgb(255, 30, 60)';
 			this.ctx.beginPath();
-			this.ctx.ellipse(x, y, 2, 2, 0, 0, PI * 2);
+			this.ctx.ellipse(x, y, r, r, 0, 0, PI * 2);
 			this.ctx.fill();
 
 			// delete out of bounds bullets
@@ -88,6 +88,7 @@ export default class Ship {
 
 	fireBullet() {
 		this.bullets.push({
+			r: 2,
 			x: this.x + (4 / 3) * this.radius * cos(this.rads()),
 			y: this.y - (4 / 3) * this.radius * sin(this.rads()),
 			xv: 8 * cos(this.rads()),

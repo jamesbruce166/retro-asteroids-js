@@ -54,6 +54,7 @@ export default class Asteroid {
 	}
 
 	generateAsteriod({ x, y, r, hits, points }) {
+		const hitCaller = (a) => this.splitAsteroid(a);
 		const asteroid = {
 			x,
 			y,
@@ -64,6 +65,10 @@ export default class Asteroid {
 			speed: this.ran(1, 3),
 			xNoise: [],
 			yNoise: [],
+			registerHit: function () {
+				console.log(this.points);
+				hitCaller(this);
+			},
 		};
 
 		for (let i = 0; i < asteroid.points; i++) {
@@ -74,7 +79,8 @@ export default class Asteroid {
 		return asteroid;
 	}
 
-	splitAsteroid(asteroid, idx) {
+	splitAsteroid(asteroid) {
+		const idx = this.asteroids.indexOf(asteroid);
 		if (asteroid.hits == 2) {
 			this.killAsteroid(idx);
 			return;
