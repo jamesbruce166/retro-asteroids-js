@@ -7,7 +7,7 @@ export default class Asteroid {
 	}
 
 	populate() {
-		for (let i = 0; i < 6; i++) {
+		for (let i = 0; i < 4; i++) {
 			this.asteroids.push(
 				this.generateAsteriod({
 					x: this.ran(100, 700),
@@ -15,6 +15,30 @@ export default class Asteroid {
 					hits: 0,
 					r: 40,
 					points: 10,
+				})
+			);
+		}
+
+		for (let i = 0; i < 3; i++) {
+			this.asteroids.push(
+				this.generateAsteriod({
+					x: this.ran(100, 700),
+					y: this.ran(100, 700),
+					hits: 1,
+					r: 30,
+					points: 8,
+				})
+			);
+		}
+
+		for (let i = 0; i < 2; i++) {
+			this.asteroids.push(
+				this.generateAsteriod({
+					x: this.ran(100, 700),
+					y: this.ran(100, 700),
+					hits: 2,
+					r: 20,
+					points: 6,
 				})
 			);
 		}
@@ -98,6 +122,10 @@ export default class Asteroid {
 				})
 			);
 		}
+	}
+
+	reset() {
+		this.asteroids = [];
 	}
 
 	handleBounds(asteroid) {
