@@ -10,5 +10,4 @@ Implementation of Asteroids game in ES6 JS.
 -   Add better rest game functionality
 -   Improve explosion mechanic
 -   Dont spawn asteroids on top of ship and vise-versa
--   Add pause functionality
 -   Add different levels and boss ships

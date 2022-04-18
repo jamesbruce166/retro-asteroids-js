@@ -6,6 +6,7 @@ export default class UserControls {
 		this.shoot = false;
 
 		this.showCollision = false;
+		this.paused = false;
 
 		document.onkeydown = (event) => {
 			const callback = {
@@ -14,6 +15,7 @@ export default class UserControls {
 				ArrowUp: () => (this.forward = true),
 				' ': () => (this.shoot = true),
 				c: () => (this.showCollision = !this.showCollision),
+				p: () => (this.paused = !this.paused),
 			}[event.key];
 
 			callback?.();

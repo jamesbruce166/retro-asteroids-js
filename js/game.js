@@ -10,12 +10,12 @@ const ctx = canvas.getContext('2d');
 
 export default class Game {
 	constructor() {
-		const controls = new UserControls();
+		this.controls = new UserControls();
 		this.ctx = ctx;
 
 		this.physics = new Physics();
-		this.ship = new Ship(ctx, controls);
-		this.asteroids = new Asteroid(ctx, controls);
+		this.ship = new Ship(ctx, this.controls);
+		this.asteroids = new Asteroid(ctx, this.controls);
 
 		this.lives = 3;
 		this.score = 0;
@@ -29,6 +29,7 @@ export default class Game {
 	}
 
 	update() {
+		if (this.controls.paused) return;
 		this.ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 		// Display stats
