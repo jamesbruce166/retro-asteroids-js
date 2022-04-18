@@ -3,12 +3,17 @@ import Explosion from './explosion.js';
 const { cos, sin, PI } = Math;
 
 export default class Ship {
-	constructor(ctx, controls) {
+	constructor(ctx, controls, FPS) {
 		this.controls = controls;
 		this.ctx = ctx;
+		this.FPS = FPS;
 
 		this.x = 400;
 		this.y = 400;
+
+		this.ax = 0;
+		this.ay = 0;
+
 		this.angle = 90;
 		this.radius = 15;
 
@@ -18,12 +23,14 @@ export default class Ship {
 	registerEvents() {
 		this.controls.rotatingLeft && this.rotateLeft();
 		this.controls.rotatingRight && this.rotateRight();
-		this.controls.forward && this.moveForward();
 		this.controls.shoot && this.fireBullet();
+
+		this.controls.forward ? this.accellerate() : this.decellerate();
 	}
 
 	render() {
 		this.drawShip();
+		this.move();
 		this.drawBullets();
 		this.handleBounds();
 
@@ -116,17 +123,27 @@ export default class Ship {
 
 	rotateLeft() {
 		if (this.angle > 359) this.angle = 0;
-		this.angle += 3;
+		this.angle += 5;
 	}
 
 	rotateRight() {
 		if (this.angle < 1) this.angle = 360;
-		this.angle -= 3;
+		this.angle -= 5;
 	}
 
-	moveForward() {
-		this.x += 5 * cos(this.rads());
-		this.y -= 5 * sin(this.rads());
+	move() {
+		this.x += this.ax;
+		this.y += this.ay;
+	}
+
+	accellerate() {
+		this.ax += (8 * cos(this.rads())) / this.FPS;
+		this.ay -= (8 * sin(this.rads())) / this.FPS;
+	}
+
+	decellerate() {
+		this.ax *= 0.95;
+		this.ay *= 0.95;
 	}
 
 	handleBounds() {

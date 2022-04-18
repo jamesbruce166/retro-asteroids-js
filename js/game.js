@@ -14,7 +14,7 @@ export default class Game {
 		this.ctx = ctx;
 
 		this.physics = new Physics();
-		this.ship = new Ship(ctx, this.controls);
+		this.ship = new Ship(ctx, this.controls, FPS);
 		this.asteroids = new Asteroid(ctx, this.controls);
 
 		this.lives = 3;
